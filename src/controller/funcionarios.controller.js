@@ -1,11 +1,49 @@
 const pool = require('../database/connection');
+const mail = require('../utils/mail')
+const bcrypt = require("bcrypt")
 
-
-
-const registrar = async (data) => {
+const registrar = async ( p_nombre,
+    s_nombre,
+    p_apellido,
+    s_apellido,
+    id,
+    fuerza,
+    rango,
+    correo) => {
     try {
-        const ciud = await pool.require("select * from f_registro_funcionario()", [])
-        return ciud.rows[0];
+        let password = generar_contraseña();
+        let passwordNH = password;
+        password = bcrypt.hashSync(password, 5);
+        const ciud = await pool.require("select * from f_registro_funcionario()", [ p_nombre,
+            s_nombre,
+            p_apellido,
+            s_apellido,
+            id,
+            fuerza,
+            rango,
+            correo, password])
+
+        if(ciud){
+    /*        var mailOptions = {
+                from: '"Our Code World " <mymail@outlook.com>', // sender address (who sends)
+                to: 'mymail@mail.com, mymail2@mail.com', // list of receivers (who receives)
+                subject: 'Hello ', // Subject line
+                text: 'Hello world ', // plaintext body
+                html: '<b>Hello world </b><br> This is the first email sent with Nodemailer in Node.js' // html body
+            };*/
+            var mailOptions = {
+                from: '"Registraduria Konrad " <RegistraduriaKonrad2022@outlook.com>', // sender address (who sends)
+                to: correo, // list of receivers (who receives)
+                subject: 'Registro en el sistema ', // Subject line
+                text: "Su registro se ha completado con exito, utilice esta contraseña para acceder: \n"+passwordNH, // plaintext body
+                html: '' // html body
+            };
+            mail.send(mailOptions);
+            return "OK";
+        }else{
+            return null;
+        }
+      
     } catch (err) {
         throw new Error("Error en registro ciudadano");
     }

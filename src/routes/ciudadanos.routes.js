@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const ciudadano = require("../controller/ciudadanos.controller");
 
 
 router.post('/registro', async (req, res) => {
@@ -111,6 +111,41 @@ router.post('/registro', async (req, res) => {
 
 
     } catch (err) {
+        return res.status(500).json({
+            msg: "Error interno",
+            detail: err,
+            code: -1
+        })
+    }
+})
+
+
+router.get("/consulta", async(req, res)=>{
+    try{
+        const {identificacion} = req.body;
+        if(!identificacion){
+            return res.status(400).json({
+                msg: "Revise el cuerpo de su solicitud",
+                detail: `No identificacion a consultar`,
+                code: -4
+            })
+        }
+        const ciudadano = await ciudadano.consultar(identificacion);
+        if(!ciudadano){
+            return res.status(200).json({
+                msg: "Se encontro informacion de la persona",
+                detail: "Ciudadano con documento "+identificacion +" registrado en el sistema",
+                data: ciudadano,
+                code: 1
+            })
+        }else{
+            return res.status(200).json({
+                msg: "No se encontro informacion de la persona",
+                detail: "Ciudadano con documento "+identificacion +" no esta registrado en el sistema",
+                code: 1
+            }) 
+        }
+    }catch(err){
         return res.status(500).json({
             msg: "Error interno",
             detail: err,
