@@ -1,13 +1,17 @@
 const {pool} = require("../database/connection");
 const bcrypt = require('bcrypt');
 
-const login = async(email, password)=>{
+const login = async(identificacion, password)=>{
     try{
-        const user = await pool.query("SELECT * FROM ", [email, password]);
-        if(!user){
+        
+        const user = await pool.query(`SELECT * FROM usuario_fun where identificacion = $1 `, [identificacion]);
+       
+        if(!user.rows[0]){
             return null;
         }else{
-            const ok = bcrypt.compare(user.rows[0].password, password);
+         
+        const ok = bcrypt.compareSync(password, user.rows[0].password);
+       
             if(!ok){
                 return null
             }else{
@@ -19,3 +23,5 @@ const login = async(email, password)=>{
         throw new Error("Error en controlador login "+err);
     }
 }
+
+module.exports ={login}

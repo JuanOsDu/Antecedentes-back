@@ -1,4 +1,4 @@
-const pool = require('../database/connection');
+const {pool} = require('../database/connection');
 const mail = require('../utils/mail')
 const bcrypt = require("bcrypt")
 
@@ -9,21 +9,36 @@ const registrar = async ( p_nombre,
     id,
     fuerza,
     rango,
-    correo) => {
-    try {
-        let password = generar_contraseña();
-        let passwordNH = password;
-        password = bcrypt.hashSync(password, 5);
-        const ciud = await pool.require("select * from f_registro_funcionario()", [ p_nombre,
-            s_nombre,
-            p_apellido,
-            s_apellido,
-            id,
-            fuerza,
-            rango,
-            correo, password])
+    correo, sexo) => {
+        try {
+            let password = generar_contraseña();
+            
+            let passwordNH = password;
+            console.log(password)
+            password = bcrypt.hashSync(password, 5);
+            console.log(password)
+            try{
+            const ciud = await pool.query(`INSERT INTO funcionario_df(
+                no_doc, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, fuerza, rango, correo)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *`, [ id,
+                    p_nombre,
+                    s_nombre,
+                    p_apellido,
+                    s_apellido,
+                    sexo,
+                    fuerza,
+                    rango,
+                    correo
+                ])}catch(errR){
+                    console.log(errR)
+                    return -2
+                }
+                
+             const user = await pool.query(`INSERT INTO usuario_fun(
+                identificacion, password)
+               VALUES ( $1, $2)`,[id, password])
 
-        if(ciud){
+        if(user.rows != "[]"){
     /*        var mailOptions = {
                 from: '"Our Code World " <mymail@outlook.com>', // sender address (who sends)
                 to: 'mymail@mail.com, mymail2@mail.com', // list of receivers (who receives)
@@ -45,6 +60,7 @@ const registrar = async ( p_nombre,
         }
       
     } catch (err) {
+        console.log(err)
         throw new Error("Error en registro ciudadano");
     }
 }
@@ -52,6 +68,7 @@ const registrar = async ( p_nombre,
 
 const generar_contraseña = () => {
     try {
+    
         const alph = [
             'A',
             'B',
@@ -80,11 +97,18 @@ const generar_contraseña = () => {
             'Y',
             'Z'
         ];
-
-        const letra1 = alph[Math.ceil(Math.random()*alph.length)];
-        const letra2 = alph[Math.ceil(Math.random()*alph.length)].toLowerCase();
+        let letra1;
+        let letra2;
+        try{
+         letra1 = alph[Math.ceil(Math.random()*alph.length)];
+         letra2 = alph[Math.ceil(Math.random()*alph.length)].toLowerCase();
+        }catch(err){
+             letra1 = "e"
+             letra2 = "R"
+        }
         var seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
         var pass = letra1+""+seq+""+letra2;
+      
         return pass;
     } catch (err) {
         throw new Error("Error generando contraseña");

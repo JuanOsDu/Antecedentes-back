@@ -3,7 +3,7 @@ const router = express.Router();
 const loginController = require("../controller/login.controller");
 
 
-router.push('/login', async(req, res)=>{
+router.post('/login', async(req, res)=>{
 try{
     const {identificacion, password}=req.body;
     if(!identificacion || !password){
@@ -13,7 +13,7 @@ try{
             code: -4
         })
     }else{
-        const user = loginController.login(identificacion, password);
+        const user = await loginController.login(identificacion, password);
         if(!user){
             return res.status(401).json({
                 msg: "Verifique sus credenciales",
@@ -30,7 +30,8 @@ try{
     }
 
 }catch(err){
-    return res.status(200).json({
+    console.log(err)
+    return res.status(500).json({
         msg: "Error interno en incio de sesion",
         detail: err,
         code: -1
@@ -39,3 +40,4 @@ try{
 
 
 })
+module.exports = router

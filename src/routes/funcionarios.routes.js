@@ -15,6 +15,7 @@ router.post('/registro', async (req, res) => {
             id,
             fuerza,
             rango,
+            sexo,
             correo
            
         } = req.body;
@@ -34,6 +35,11 @@ router.post('/registro', async (req, res) => {
                 campo: "p_apellido",
 
                 valor: p_apellido
+            },
+            {
+                campo: "sexo",
+
+                valor: sexo
             },
             {
                 campo: "s_apellido",
@@ -62,7 +68,8 @@ router.post('/registro', async (req, res) => {
             
 
         ]
-        const empty = data.filter(e => e.valor == null);
+        const empty = data.find(e => e.valor == null);
+        
         if (empty) {
             return res.status(400).json({
                 msg: "Campo faltante",
@@ -70,15 +77,23 @@ router.post('/registro', async (req, res) => {
                 code: -4
             })
         }else{
-            const ciudadano = await ciud.registrar( p_nombre,
+            const ciudadano = await funcionario.registrar( p_nombre,
                 s_nombre,
                 p_apellido,
                 s_apellido,
                 id,
                 fuerza,
                 rango,
-                correo);
+                correo, sexo);
+               
             if(ciudadano){
+                if(ciudadano == -2){
+                    return res.status(200).json({
+                        msg: "Funcionario ya existe",
+                        datail: ciudadano,
+                        code: 1
+                    })
+                }
                 return res.status(200).json({
                     msg: "Registro exitoso",
                     datail: ciudadano,
@@ -97,6 +112,7 @@ router.post('/registro', async (req, res) => {
 
 
     } catch (err) {
+        
         return res.status(500).json({
             msg: "Error interno",
             detail: err,

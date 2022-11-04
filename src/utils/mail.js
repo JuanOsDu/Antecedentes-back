@@ -18,12 +18,14 @@ var transporter = nodemailer.createTransport({
 const send =async(mailOptions)=>{
     transporter.sendMail(mailOptions, function(error, info){
         if(error){
+            console.log(error)
             throw new Error("Error enviando correo")
         }
     
         console.log('Correo enviado: ' + info.response);
     });
 }
+
 
 
 module.exports = {send}
