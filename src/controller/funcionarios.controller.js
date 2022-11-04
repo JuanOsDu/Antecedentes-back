@@ -14,9 +14,9 @@ const registrar = async ( p_nombre,
             let password = generar_contraseña();
             
             let passwordNH = password;
-            console.log(password)
+            
             password = bcrypt.hashSync(password, 5);
-            console.log(password)
+           
             try{
             const ciud = await pool.query(`INSERT INTO funcionario_df(
                 no_doc, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, sexo, fuerza, rango, correo)
@@ -100,8 +100,8 @@ const generar_contraseña = () => {
         let letra1;
         let letra2;
         try{
-         letra1 = alph[Math.ceil(Math.random()*alph.length)];
-         letra2 = alph[Math.ceil(Math.random()*alph.length)].toLowerCase();
+         letra1 = alph[Math.floor(Math.random()*alph.length)];
+         letra2 = alph[Math.floor(Math.random()*alph.length)].toLowerCase();
         }catch(err){
              letra1 = "e"
              letra2 = "R"
