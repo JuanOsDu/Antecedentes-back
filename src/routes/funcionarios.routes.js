@@ -5,7 +5,7 @@ const funcionario = require('../controller/funcionarios.controller');
 
 
 
-router.get('/registro-funcionario', async (req, res) => {
+router.post('/registro-funcionario', async (req, res) => {
     try {
         const {
             p_nombre,
@@ -18,7 +18,7 @@ router.get('/registro-funcionario', async (req, res) => {
             sexo,
             correo
            
-        } = req.body;
+        } = req.query;
 
         const data = [
             {
@@ -71,6 +71,7 @@ router.get('/registro-funcionario', async (req, res) => {
         const empty = data.find(e => e.valor == null);
         
         if (empty) {
+            
             return res.status(200).json({
                 msg: "Campo faltante",
                 datail: empty,

@@ -21,7 +21,7 @@ router.post('/registro-ciudadano', async (req, res) => {
             tipo_doc,
             sexo,
              grupo_sanguineo
-        } = req.body;
+        } = req.query;
 
         const data = [
             {
@@ -109,7 +109,7 @@ router.post('/registro-ciudadano', async (req, res) => {
                 code: -4
             })
         }else{
-            const ciudadano = await ciud.registrar(req.body);
+            const ciudadano = await ciud.registrar(req.query);
             if(ciudadano){
                 return res.status(200).json({
                     msg: "Registro exitoso",
@@ -140,7 +140,7 @@ router.post('/borrar', async (req, res) => {
     try {
         const {
             identificacion
-        } = req.body;
+        } = req.query;
 
         const data = [
            
@@ -203,7 +203,7 @@ router.post('/actualizacion', async (req, res) => {
             estatura,
             tipo_doc,
             sexo, grupo_sanguineo
-        } = req.body;
+        } = req.query;
 
         const data = [
          
@@ -222,7 +222,7 @@ router.post('/actualizacion', async (req, res) => {
                 code: -4
             })
         }else{
-            const ciudadano = await ciud.actualizar(req.body);
+            const ciudadano = await ciud.actualizar(req.query);
             if(ciudadano.rows != "[]"){
                 return res.status(200).json({
                     msg: "Actualizacion exitosa",
@@ -251,7 +251,7 @@ router.post('/actualizacion', async (req, res) => {
 })
 router.get("/consulta", async(req, res)=>{
     try{
-        const {identificacion} = req.body;
+        const {identificacion} = req.query;
         if(!identificacion){
             return res.status(400).json({
                 msg: "Revise el cuerpo de su solicitud",

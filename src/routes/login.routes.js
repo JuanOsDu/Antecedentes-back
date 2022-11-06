@@ -5,7 +5,7 @@ const loginController = require("../controller/login.controller");
 
 router.post('/login', async(req, res)=>{
 try{
-    const {identificacion, password}=req.body;
+    const {identificacion, password}=req.query;
     if(!identificacion || !password){
         return res.status(400).json({
             msg: "Revise el cuerpo de su solicitud",
