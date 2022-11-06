@@ -71,7 +71,7 @@ router.post('/registro-funcionario', async (req, res) => {
         const empty = data.find(e => e.valor == null);
         
         if (empty) {
-            return res.status(400).json({
+            return res.status(200).json({
                 msg: "Campo faltante",
                 datail: empty,
                 code: -4
