@@ -93,6 +93,12 @@ router.post('/registro-funcionario', async (req, res) => {
                         datail: ciudadano,
                         code: 1
                     })
+                }else if(ciudadano == -1){
+                    return res.status(200).json({
+                        msg: "No se pudo crear",
+                        datail: ciudadano,
+                        code: -1
+                    })
                 }
                 return res.status(200).json({
                     msg: "Registro exitoso",
