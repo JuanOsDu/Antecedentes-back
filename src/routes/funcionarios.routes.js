@@ -137,18 +137,19 @@ router.get('/consulta-antecedentes', async(req, res)=>{
                 return res.status(200).json({
                     msg: "El ciudadano no es requerido por alguna autoridad",
                     detail: "No se encontro registro de antecedentes",
-                    code: 1
+                    code: 0
                 })
             }else{
                 return res.status(200).json({
                     msg: "El ciudadano es requerido por las autoridades",
-                    detail: `Apellidos: ${estado.apellidos}\nNombres: ${estado.nombres}\nIdentificacion: ${estado.identificacion}`,
+                    detail: estado,
                 
                     code: 1
                 }) 
             }
         }
     }catch(err){
+       
         return res.status(500).json({
             msg: "Error interno",
             detail: err,

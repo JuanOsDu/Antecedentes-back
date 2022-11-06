@@ -117,10 +117,11 @@ const generar_contraseña = () => {
 
 const consultarDocumento = async(identificacion)=>{
     try{
-        const ciudadadano = await pool.query("select * from v_ciudadanos_requeridos where identificacion="+identificacion);
+        const ciudadadano = await pool.query("select * from v_ciudadanos_requeridos where identificacion='"+identificacion+"'");
         return ciudadadano.rows[0];
 
     }catch(err){
+        console.log(err)
         throw new Error("Error consultando documento");
     }
 }
