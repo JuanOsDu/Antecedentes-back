@@ -133,7 +133,7 @@ router.get('/consulta-antecedentes', async(req, res)=>{
             })
         }else{
             const estado = await funcionario.consultarDocumento(identificacion);
-            if(estado.rows == "[]"){
+            if(!estado){
                 return res.status(200).json({
                     msg: "El ciudadano no es requerido por alguna autoridad",
                     detail: "No se encontro registro de antecedentes",
@@ -142,8 +142,8 @@ router.get('/consulta-antecedentes', async(req, res)=>{
             }else{
                 return res.status(200).json({
                     msg: "El ciudadano es requerido por las autoridades",
-                    detail: "Se encontro registro de antecedentes",
-                    data: estado.rows,
+                    detail: `Apellidos: ${estado.apellidos}\nNombres: ${estado.nombres}\nIdentificacion: ${estado.identificacion}`,
+                
                     code: 1
                 }) 
             }

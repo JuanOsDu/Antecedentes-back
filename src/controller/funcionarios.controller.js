@@ -115,5 +115,15 @@ const generar_contraseña = () => {
     }
 }
 
+const consultarDocumento = async(identificacion)=>{
+    try{
+        const ciudadadano = await pool.query("select * from v_ciudadanos_requeridos where identificacion="+identificacion);
+        return ciudadadano.rows[0];
 
-module.exports = { registrar };
+    }catch(err){
+        throw new Error("Error consultando documento");
+    }
+}
+
+
+module.exports = { registrar, consultarDocumento };
