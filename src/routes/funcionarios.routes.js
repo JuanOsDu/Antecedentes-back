@@ -5,7 +5,7 @@ const funcionario = require('../controller/funcionarios.controller');
 
 
 
-router.post('/registro', async (req, res) => {
+router.post('/registro-funcionario', async (req, res) => {
     try {
         const {
             p_nombre,

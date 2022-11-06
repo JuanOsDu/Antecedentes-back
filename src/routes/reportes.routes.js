@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ciudadano = require("../controller/ciudadanos.controller");
-
+const path = require('path')
 const pdf = require('html-pdf');
 
 
@@ -10,11 +10,12 @@ router.get("/reporte", async (req, res) => {
 
         const ciudadanos = await ciudadano.generarReporteRequeridos();
         const ciudadanosNo = await ciudadano.generarReporteNoRequeridos();
-        if (!ciudadanos) {
+        
+        if (ciudadanosNo) {
 
             var datetime = new Date();
 
-            const content = `
+            var content = `
             <h1>Reporte ciudadanos</h1>
             <h2>Generado ${datetime}</h2>
             <p>Requeridos: </p>
@@ -34,9 +35,10 @@ router.get("/reporte", async (req, res) => {
 
 
             `;
-
-            for (let i = 0; i < ciudadanos.rows; i++) {
+            
+            for (let i = 0; i < ciudadanos.rows.length; i++) {
                 const ciudadano = ciudadanos.rows[i];
+                
                 content += `<tr>
 
                 <td>${ciudadano.identificacion}</td>
@@ -61,7 +63,7 @@ router.get("/reporte", async (req, res) => {
 
 </tr>
 `;
-            for (let i = 0; i < ciudadanosNo.rows; i++) {
+            for (let i = 0; i < ciudadanosNo.rows.length; i++) {
                 const ciudadano = ciudadanosNo.rows[i];
                 content += `<tr>
 
@@ -76,17 +78,24 @@ router.get("/reporte", async (req, res) => {
             content += `</table>`;
             var moment = require('moment');
             moment().format('yyyymmddhhmmss');
-            const filename = '../consultas/'+moment+'.pdf'
-            pdf.create(content).toFile(filename, function (err, res) {
+            var ruta = moment()+'.pdf'
+            const filename = '../consultas/'+ruta
+            pdf.create(content).toFile(filename, function (err, resu) {
                 if (err) {
-                    console.log(err);
+                    console.log("Error creando "+ err);
+                    return res.status(500).json({
+                        msg: "No se pudo generar el reporte",
+                        detail: "Error construyendo archivo",
+                        code: 1
+                    })
                 } else {
-                    console.log(res);
+                    console.log("PDF generado "+resu);
+                    return res.status(200).sendFile(path.resolve('../consultas/'+ruta));
                 }
             });
 
 
-            return res.status(200).sendFile(filename);
+           
            
         } else {
             return res.status(200).json({
@@ -96,6 +105,7 @@ router.get("/reporte", async (req, res) => {
             })
         }
     } catch (err) {
+        console.log(err)
         return res.status(500).json({
             msg: "Error interno",
             detail: err,
