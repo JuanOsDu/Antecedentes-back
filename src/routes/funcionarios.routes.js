@@ -130,7 +130,7 @@ router.post('/registro-funcionario', async (req, res) => {
 
 router.get('/consulta-antecedentes', async(req, res)=>{
     try{
-        const {identificacion}= req.body;
+        const identificacion= req.query.identificacion;
         if(!identificacion){
             return res.status(400).json({
                 msg: "No se puede procesar su solicitud",
