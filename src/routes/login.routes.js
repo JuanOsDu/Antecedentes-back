@@ -7,7 +7,7 @@ router.post('/login', async(req, res)=>{
 try{
     const {identificacion, password}=req.query;
     if(!identificacion || !password){
-        return res.status(400).json({
+        return res.status(200).json({
             msg: "Revise el cuerpo de su solicitud",
             detail: `No ingreso identificacion y/o contrasena`,
             code: -4
@@ -31,7 +31,7 @@ try{
 
 }catch(err){
     console.log(err)
-    return res.status(500).json({
+    return res.status(200).json({
         msg: "Error interno en incio de sesion",
         detail: err,
         code: -1

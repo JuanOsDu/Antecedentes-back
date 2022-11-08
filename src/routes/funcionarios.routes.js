@@ -120,7 +120,7 @@ router.post('/registro-funcionario', async (req, res) => {
 
     } catch (err) {
         
-        return res.status(500).json({
+        return res.status(200).json({
             msg: "Error interno",
             detail: err,
             code: -1
@@ -133,7 +133,7 @@ router.get('/consulta-antecedentes', async(req, res)=>{
     try{
         const identificacion= req.query.identificacion;
         if(!identificacion){
-            return res.status(400).json({
+            return res.status(200).json({
                 msg: "No se puede procesar su solicitud",
                 detail: "Verifique cuerpo de su petición",
                 code: -4
@@ -157,7 +157,7 @@ router.get('/consulta-antecedentes', async(req, res)=>{
         }
     }catch(err){
        
-        return res.status(500).json({
+        return res.status(200).json({
             msg: "Error interno",
             detail: err,
             code: -1

@@ -103,7 +103,7 @@ router.post('/registro-ciudadano', async (req, res) => {
         ]
         const empty = data.find(e => e.valor == null);
         if (empty) {
-            return res.status(400).json({
+            return res.status(200).json({
                 msg: "Campo faltante",
                 datail: empty,
                 code: -4
@@ -129,7 +129,7 @@ router.post('/registro-ciudadano', async (req, res) => {
 
 
     } catch (err) {
-        return res.status(500).json({
+        return res.status(200).json({
             msg: "Error interno",
             detail: err,
             code: -1
@@ -152,7 +152,7 @@ router.post('/borrar', async (req, res) => {
         ]
         const empty = data.find(e => e.valor == null);
         if (empty) {
-            return res.status(400).json({
+            return res.status(200).json({
                 msg: "Campo faltante",
                 datail: empty,
                 code: -4
@@ -178,7 +178,7 @@ router.post('/borrar', async (req, res) => {
 
 
     } catch (err) {
-        return res.status(500).json({
+        return res.status(200).json({
             msg: "Error interno",
             detail: err,
             code: -1
@@ -216,7 +216,7 @@ router.post('/actualizacion', async (req, res) => {
         ]
         const empty = data.find(e => e.valor == null);
         if (empty) {
-            return res.status(400).json({
+            return res.status(200).json({
                 msg: "Campo faltante",
                 datail: empty,
                 code: -4
@@ -242,7 +242,7 @@ router.post('/actualizacion', async (req, res) => {
 
 
     } catch (err) {
-        return res.status(500).json({
+        return res.status(200).json({
             msg: "Error interno",
             detail: err,
             code: -1
@@ -253,7 +253,7 @@ router.get("/consulta", async(req, res)=>{
     try{
         const {identificacion} = req.query;
         if(!identificacion){
-            return res.status(400).json({
+            return res.status(200).json({
                 msg: "Revise el cuerpo de su solicitud",
                 detail: `No identificacion a consultar`,
                 code: -4
@@ -275,7 +275,7 @@ router.get("/consulta", async(req, res)=>{
             }) 
         }
     }catch(err){
-        return res.status(500).json({
+        return res.status(200).json({
             msg: "Error interno",
             detail: err,
             code: -1
