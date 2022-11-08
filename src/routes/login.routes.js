@@ -15,7 +15,7 @@ try{
     }else{
         const user = await loginController.login(identificacion, password);
         if(!user){
-            return res.status(401).json({
+            return res.status(200).json({
                 msg: "Verifique sus credenciales",
                 detail: "identificacion o contraseña incorrecta",
                 code: 2
