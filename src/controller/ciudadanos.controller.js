@@ -54,8 +54,9 @@ const actualizar = async (data) => {
             fecha_nac,
             lugar_nac,
             rh,
-            estatura, sexo,
-            g_sanguineo
+            estatura, 
+            sexo
+           
         } = data;
 
         const ciud = await pool.require("update ciudadano set primer_nombre=$1, segundo_nombre=$2, primer_apellido=$3, segundo_apellido=$4,tipo_doc=$5, fecha_exp=$6, lugar_exp=$7,fecha_nacimiento$8, lugar_nacimiento=$9,   rh=$10,  estatura=$11, sexo=$12, grupo_sanguineo=$13, no_doc=$14 where no_doc=$15 returning *",
