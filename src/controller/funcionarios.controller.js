@@ -126,15 +126,15 @@ const generar_contraseña = () => {
 const consultarDocumento = async (identificacion) => {
     try {
        
-        let ciudadadano = await pool.query("select * from v_ciudadanos_requeridos where identificacion='" + identificacion + "'");
-        if(ciudadadano.rows[0]){
+        let ciudadano = await pool.query("select * from v_ciudadanos_requeridos where identificacion='" + identificacion + "'");
+        if(ciudadano.rows[0]){
             return ciudadano.rows[0];
         }
         for(let i = 1; i <= 3; i++){
-            identificacion = identificacion.substring(i); 
+            identificacion = identificacion.substring(1); 
             console.log(identificacion);
-            ciudadadano = await pool.query("select * from v_ciudadanos_requeridos where identificacion='" + identificacion + "'");
-            if(ciudadadano.rows[0]){
+            ciudadano = await pool.query("select * from v_ciudadanos_requeridos where identificacion='" + identificacion + "'");
+            if(ciudadano.rows[0]){
                 return ciudadano.rows[0];
             }
         }
