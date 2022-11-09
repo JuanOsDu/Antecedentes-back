@@ -104,7 +104,7 @@ router.post('/registro-ciudadano', async (req, res) => {
         const empty = data.find(e => e.valor == null);
         if (empty) {
             return res.status(200).json({
-                msg: "campo faltante"+empty,
+                msg: "campo faltante"+empty.campo,
                 datail: empty,
                 code: -4
             })
@@ -153,7 +153,7 @@ router.post('/borrar', async (req, res) => {
         const empty = data.find(e => e.valor == null);
         if (empty) {
             return res.status(200).json({
-                msg: "campo faltante"+empty,
+                msg: "campo faltante"+empty.campo,
                 datail: empty,
                 code: -4
             })
@@ -217,7 +217,7 @@ router.post('/actualizacion', async (req, res) => {
         const empty = data.find(e => e.valor == null);
         if (empty) {
             return res.status(200).json({
-                msg: "campo faltante"+empty,
+                msg: "campo faltante"+empty.campo,
                 datail: empty,
                 code: -4
             })
