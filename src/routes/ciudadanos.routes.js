@@ -202,7 +202,7 @@ router.post('/actualizacion', async (req, res) => {
             g_sanguineo,
             estatura,
             tipo_doc,
-            sexo, grupo_sanguineo
+            sexo
         } = req.query;
 
         const data = [
