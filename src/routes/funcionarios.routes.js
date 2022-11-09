@@ -73,7 +73,7 @@ router.post('/registro-funcionario', async (req, res) => {
         if (empty) {
             
             return res.status(200).json({
-                msg: "Campo faltante",
+                msg: "Campo faltante: "+empty,
                 datail: empty,
                 code: -4
             })
