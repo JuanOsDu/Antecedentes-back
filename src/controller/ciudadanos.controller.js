@@ -17,7 +17,7 @@ const registrar = async (data) => {
             lugar_nac,
             rh,
             estatura, sexo,
-            grupo_sanguineo
+            g_sanguineo
         } = data;
 
         const ciud = await pool.require("insert into ciudadano( primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,tipo_doc, no_doc,fecha_exp, lugar_exp,fecha_nacimiento, lugar_nacimiento,   rh,  estatura, sexo, grupo_sanguineo) values($1, $2, $3, $4, $5, $6, $7, $8, $9,$10,$11,$12,$13,$14) returning *", [p_nombre,
@@ -32,7 +32,7 @@ const registrar = async (data) => {
             lugar_nac,
             rh,
             estatura, sexo,
-            grupo_sanguineo])
+            g_sanguineo])
         return ciud.rows[0];
     } catch (err) {
         throw new Error("Error en registro ciudadano");

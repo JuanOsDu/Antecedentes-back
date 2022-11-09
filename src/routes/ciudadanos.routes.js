@@ -19,16 +19,12 @@ router.post('/registro-ciudadano', async (req, res) => {
             g_sanguineo,
             estatura,
             tipo_doc,
-            sexo,
-             grupo_sanguineo
+            sexo
+            
         } = req.query;
 
         const data = [
-            {
-                campo: "grupo_sanguineo",
-
-                valor: grupo_sanguineo
-            },
+          
             {
                 campo: "tipo_doc",
 
