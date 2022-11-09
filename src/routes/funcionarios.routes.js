@@ -92,7 +92,7 @@ router.post('/registro-funcionario', async (req, res) => {
                     return res.status(200).json({
                         msg: "Funcionario ya existe",
                         datail: ciudadano,
-                        code: 1
+                        code: -2
                     })
                 }else if(ciudadano == -1){
                     return res.status(200).json({

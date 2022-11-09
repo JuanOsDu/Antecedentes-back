@@ -9,7 +9,7 @@ try{
     if(!identificacion || !password){
         return res.status(200).json({
             msg: "Revise el cuerpo de su solicitud",
-            detail: `No ingreso identificacion y/o contrasena`,
+            detail: `No ingreso identificacion y/o contraseña`,
             code: -4
         })
     }else{
