@@ -20,11 +20,11 @@ router.post('/registro-ciudadano', async (req, res) => {
             estatura,
             tipo_doc,
             sexo
-            
+
         } = req.query;
 
         const data = [
-          
+
             {
                 campo: "tipo_doc",
 
@@ -100,27 +100,36 @@ router.post('/registro-ciudadano', async (req, res) => {
         const empty = data.find(e => e.valor == null);
         if (empty) {
             return res.status(200).json({
-                msg: "campo faltante"+empty.campo,
+                msg: "campo faltante" + empty.campo,
                 datail: empty,
                 code: -4
             })
-        }else{
-            const ciudadano = await ciud.registrar(req.query);
-            if(ciudadano){
+        } else {
+            try {
+
+                const ciudadano = await ciud.registrar(req.query);
+            } catch (err) {
+                return res.status(200).json({
+                    msg: "Registro no se pudo completar, asegurese que ya no este registrado",
+                    datail: ciudadano,
+                    code: -1
+                })
+            }
+            if (ciudadano) {
                 return res.status(200).json({
                     msg: "Registro exitoso",
                     datail: ciudadano,
                     code: 1
                 })
-            }else{
+            } else {
                 return res.status(200).json({
                     msg: "Registro no se pudo completar",
                     datail: ciudadano,
                     code: -1
-                }) 
+                })
             }
         }
-    
+
 
 
 
@@ -140,7 +149,7 @@ router.post('/borrar', async (req, res) => {
         } = req.query;
 
         const data = [
-           
+
             {
                 campo: "identificacion",
 
@@ -150,27 +159,27 @@ router.post('/borrar', async (req, res) => {
         const empty = data.find(e => e.valor == null);
         if (empty) {
             return res.status(200).json({
-                msg: "campo faltante"+empty.campo,
+                msg: "campo faltante" + empty.campo,
                 datail: empty,
                 code: -4
             })
-        }else{
+        } else {
             const ciudadano = await ciud.borrar(identificacion);
-            if(ciudadano){
+            if (ciudadano) {
                 return res.status(200).json({
                     msg: "borrado exitoso",
                     datail: ciudadano,
                     code: 1
                 })
-            }else{
+            } else {
                 return res.status(200).json({
                     msg: "Borrado no se pudo completar",
                     datail: "Intente mas tarde",
                     code: -1
-                }) 
+                })
             }
         }
-    
+
 
 
 
@@ -203,7 +212,7 @@ router.post('/actualizacion', async (req, res) => {
         } = req.query;
 
         const data = [
-         
+
             {
                 campo: "id",
 
@@ -214,27 +223,27 @@ router.post('/actualizacion', async (req, res) => {
         const empty = data.find(e => e.valor == null);
         if (empty) {
             return res.status(200).json({
-                msg: "campo faltante"+empty.campo,
+                msg: "campo faltante" + empty.campo,
                 datail: empty,
                 code: -4
             })
-        }else{
+        } else {
             const ciudadano = await ciud.actualizar(req.query);
-            if(ciudadano.rows != "[]"){
+            if (ciudadano.rows != "[]") {
                 return res.status(200).json({
                     msg: "Actualizacion exitosa",
                     datail: ciudadano,
                     code: 1
                 })
-            }else{
+            } else {
                 return res.status(200).json({
                     msg: "Actualizacion no se pudo completar",
                     datail: ciudadano,
                     code: -1
-                }) 
+                })
             }
         }
-    
+
 
 
 
@@ -246,32 +255,33 @@ router.post('/actualizacion', async (req, res) => {
         })
     }
 })
-router.get("/consulta", async(req, res)=>{
-    try{
-        const {identificacion} = req.query;
-        if(!identificacion){
+router.get("/consulta", async (req, res) => {
+    try {
+        const { identificacion } = req.query;
+        if (!identificacion) {
             return res.status(200).json({
                 msg: "Revise el cuerpo de su solicitud",
                 detail: `No identificacion a consultar`,
                 code: -4
             })
         }
+
         const ciudadano = await ciud.consultar(identificacion);
-        if(ciudadano){
+        if (ciudadano) {
             return res.status(200).json({
                 msg: "Se encontro informacion de la persona",
-                detail: "Ciudadano con documento "+identificacion +" registrado en el sistema",
+                detail: "Ciudadano con documento " + identificacion + " registrado en el sistema",
                 data: ciudadano,
                 code: 1
             })
-        }else{
+        } else {
             return res.status(200).json({
                 msg: "No se encontro informacion de la persona",
-                detail: "Ciudadano con documento "+identificacion +" no esta registrado en el sistema",
+                detail: "Ciudadano con documento " + identificacion + " no esta registrado en el sistema",
                 code: 1
-            }) 
+            })
         }
-    }catch(err){
+    } catch (err) {
         return res.status(200).json({
             msg: "Error interno",
             detail: err,
