@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ciudadano = require("../controller/ciudadanos.controller");
+const ciud = require("../controller/ciudadanos.controller");
 
 
 router.post('/registro-ciudadano', async (req, res) => {
@@ -125,6 +125,7 @@ router.post('/registro-ciudadano', async (req, res) => {
 
 
     } catch (err) {
+        console.log(err)
         return res.status(200).json({
             msg: "Error interno",
             detail: err,
@@ -255,7 +256,7 @@ router.get("/consulta", async(req, res)=>{
                 code: -4
             })
         }
-        const ciudadano = await ciudadano.consultar(identificacion);
+        const ciudadano = await ciud.consultar(identificacion);
         if(ciudadano){
             return res.status(200).json({
                 msg: "Se encontro informacion de la persona",
