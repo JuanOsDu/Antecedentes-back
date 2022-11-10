@@ -105,10 +105,12 @@ router.post('/registro-ciudadano', async (req, res) => {
                 code: -4
             })
         } else {
-            try {
+            let ciudadano = null;
 
-                const ciudadano = await ciud.registrar(req.query);
-            } catch (err) {
+            ciudadano = await ciud.registrar(req.query);
+
+            if (ciudadano == -1) {
+
                 return res.status(200).json({
                     msg: "Registro no se pudo completar, asegurese que ya no este registrado",
                     datail: ciudadano,

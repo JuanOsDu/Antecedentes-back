@@ -34,10 +34,11 @@ const registrar = async (data) => {
             rh,
             estatura, sexo,
             g_sanguineo])
+          
         return ciud.rows[0];
     } catch (err) {
         console.log(err)
-        throw new Error("Error en registro ciudadano");
+        return -1;
     }
 }
 
