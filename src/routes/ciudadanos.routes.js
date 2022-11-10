@@ -270,6 +270,8 @@ router.get("/consulta", async (req, res) => {
 
         const ciudadano = await ciud.consultar(identificacion);
         if (ciudadano) {
+            ciudadano.code =1;
+            ciudadano.msg = 'Ciudadano encontrado'
             return res.status(200).json(ciudadano)
         } else {
             return res.status(200).json({
