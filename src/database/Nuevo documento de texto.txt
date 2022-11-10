@@ -1,0 +1,21 @@
+create table ciudadano(
+id serial primary KEY,
+tipo_doc INTEGER not null,
+no_doc varchar(50) not null,
+	primer_nombre varchar(50) not null,
+segundo_nombre varchar(50) ,
+	primer_apellido varchar(50) not null,
+	segundo_apellido varchar(50) ,
+	sexo integer not null,
+	fecha_nacimiento date not null,
+	lugar_nacimiento integer not null
+
+)
+
+
+create table usuario_fun(
+id serial primary key,
+identificacion varchar(100)unique not null,
+password varchar(200) not null,
+	constraint usuario_funcionario_fk foreign key(identificacion) references funcionario_df(no_doc)
+)
