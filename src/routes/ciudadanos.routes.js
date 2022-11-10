@@ -277,7 +277,7 @@ router.get("/consulta", async (req, res) => {
             return res.status(200).json({
                 msg: "No se encontro informacion de la persona",
                 detail: "Ciudadano con documento " + identificacion + " no esta registrado en el sistema",
-                code: 1
+                code: 2
             })
         }
     } catch (err) {
