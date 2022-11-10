@@ -174,6 +174,7 @@ router.post('/borrar', async (req, res) => {
                     code: 1
                 })
             } else {
+             
                 return res.status(200).json({
                     msg: "Borrado no se pudo completar",
                     datail: "Intente mas tarde",
@@ -186,6 +187,7 @@ router.post('/borrar', async (req, res) => {
 
 
     } catch (err) {
+        
         return res.status(200).json({
             msg: "Error interno",
             detail: err,

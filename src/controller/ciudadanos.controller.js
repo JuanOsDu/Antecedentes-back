@@ -85,9 +85,10 @@ const actualizar = async (data) => {
 }
 const borrar = async (id) => {
     try {
-        const ciudadano = await pool.query("delete from ciudadano where no_doc="+id+ " returning *")
+        const ciudadano = await pool.query("delete from ciudadano where no_doc='"+id+ "' returning *")
         return ciudadano.rows[0]
     } catch (err) {
+        console.log(err)
         throw new Error("Error borrando ciudadano");
     }
 }
