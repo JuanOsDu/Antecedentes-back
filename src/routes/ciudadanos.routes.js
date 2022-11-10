@@ -177,7 +177,7 @@ router.post('/borrar', async (req, res) => {
              
                 return res.status(200).json({
                     msg: "Borrado no se pudo completar",
-                    datail: "Intente mas tarde",
+                    datail: "Ciudadano no existe",
                     code: -1
                 })
             }
