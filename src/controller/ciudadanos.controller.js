@@ -58,10 +58,10 @@ const actualizar = async (data) => {
             rh,
             estatura, 
             sexo
-           
+           ,g_sanguineo
         } = data;
 
-        const ciud = await pool.query("update ciudadano set primer_nombre=$1, segundo_nombre=$2, primer_apellido=$3, segundo_apellido=$4,tipo_doc=$5, fecha_exp=$6, lugar_exp=$7,fecha_nacimiento$8, lugar_nacimiento=$9,   rh=$10,  estatura=$11, sexo=$12, grupo_sanguineo=$13, no_doc=$14 where no_doc=$15 returning *",
+        const ciud = await pool.query("update ciudadano set primer_nombre=$1, segundo_nombre=$2, primer_apellido=$3, segundo_apellido=$4,tipo_doc=$5, fecha_exp=$6, lugar_exp=$7,fecha_nacimiento=$8, lugar_nacimiento=$9,   rh=$10,  estatura=$11, sexo=$12, grupo_sanguineo=$13, no_doc=$14 where no_doc=$15 returning *",
             [p_nombre,
                 s_nombre,
                 p_apellido,
@@ -78,6 +78,7 @@ const actualizar = async (data) => {
                 id])
         return ciud.rows[0];
     } catch (err) {
+        console.log(err)
         throw new Error("Error en actualizacion ciudadano");
     }
 }

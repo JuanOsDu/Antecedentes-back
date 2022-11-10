@@ -248,6 +248,7 @@ router.post('/actualizacion', async (req, res) => {
 
 
     } catch (err) {
+        console.log(err)
         return res.status(200).json({
             msg: "Error interno",
             detail: err,
