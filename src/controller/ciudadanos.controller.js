@@ -117,11 +117,12 @@ const generarReporteNoRequeridos = async () => {
 }
 const consultar = async (id) => {
     try {
-        const ciudadanos = await pool.query("SELECT * FROM ciudadano where no_doc="+id);
+        const ciudadanos = await pool.query("SELECT * FROM ciudadano where no_doc='"+id+"'");
         return ciudadanos.rows[0];
 
     } catch (err) {
-        throw new Error("Error generando reporte")
+        console.log(err)
+        throw new Error("Error consultando")
     }
 }
 module.exports = { registrar, generarReporteRequeridos, generarReporteNoRequeridos, actualizar, borrar , consultar};

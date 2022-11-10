@@ -270,12 +270,7 @@ router.get("/consulta", async (req, res) => {
 
         const ciudadano = await ciud.consultar(identificacion);
         if (ciudadano) {
-            return res.status(200).json({
-                msg: "Se encontro informacion de la persona",
-                detail: "Ciudadano con documento " + identificacion + " registrado en el sistema",
-                data: ciudadano,
-                code: 1
-            })
+            return res.status(200).json(ciudadano)
         } else {
             return res.status(200).json({
                 msg: "No se encontro informacion de la persona",
@@ -284,6 +279,7 @@ router.get("/consulta", async (req, res) => {
             })
         }
     } catch (err) {
+        console.log(err)
         return res.status(200).json({
             msg: "Error interno",
             detail: err,
