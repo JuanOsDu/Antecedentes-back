@@ -105,10 +105,12 @@ router.post('/registro-ciudadano', async (req, res) => {
                 code: -4
             })
         } else {
-            try {
+            let ciudadano = null;
 
-                const ciudadano = await ciud.registrar(req.query);
-            } catch (err) {
+            ciudadano = await ciud.registrar(req.query);
+
+            if (ciudadano == -1) {
+
                 return res.status(200).json({
                     msg: "Registro no se pudo completar, asegurese que ya no este registrado",
                     datail: ciudadano,
@@ -269,20 +271,18 @@ router.get("/consulta", async (req, res) => {
 
         const ciudadano = await ciud.consultar(identificacion);
         if (ciudadano) {
-            return res.status(200).json({
-                msg: "Se encontro informacion de la persona",
-                detail: "Ciudadano con documento " + identificacion + " registrado en el sistema",
-                data: ciudadano,
-                code: 1
-            })
+            ciudadano.code =1;
+            ciudadano.msg = 'Ciudadano encontrado'
+            return res.status(200).json(ciudadano)
         } else {
             return res.status(200).json({
                 msg: "No se encontro informacion de la persona",
                 detail: "Ciudadano con documento " + identificacion + " no esta registrado en el sistema",
-                code: 1
+                code: 2
             })
         }
     } catch (err) {
+        console.log(err)
         return res.status(200).json({
             msg: "Error interno",
             detail: err,
